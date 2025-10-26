@@ -412,7 +412,7 @@ m.displayName = l.UC.displayName;
             }
         }
         
-        async function M(e, s, a, t, operationCount = 1) {
+        async function M(e, s, a, t, operationCount = 1, maxFeeMultiplier = 1) {
             try {
                 let r, l, n = e.publicKey(), o = s.publicKey();
                 let i = await _().loadAccount(n);
@@ -436,7 +436,12 @@ m.displayName = l.UC.displayName;
                 }
                 
                 let c = await _().fetchBaseFee();
-                let d = new P.TransactionBuilder(i, { fee: c, networkPassphrase: O });
+                const calculatedMaxFee = (parseInt(c) * (operationCount * 2) * maxFeeMultiplier).toString();
+
+                let d = new P.TransactionBuilder(i, { 
+                    fee: calculatedMaxFee,
+                    networkPassphrase: O 
+                });
 
                 for (let i_loop = 0; i_loop < operationCount; i_loop++) {
                     d.addOperation(P.Operation.claimClaimableBalance({ balanceId: r.id, source: o }))
@@ -462,9 +467,9 @@ m.displayName = l.UC.displayName;
             }
         }
 
-        async function q(e, s, a, t, operationCount) { 
+        async function q(e, s, a, t, operationCount, maxFeeMultiplier) { 
             let r = U(e), l = r.publicKey(), n = U(t), o = s.trim().toUpperCase();
-            let i = await M(n, r, o, a, operationCount); 
+            let i = await M(n, r, o, a, operationCount, maxFeeMultiplier); 
             return { details: { senderAddress: l, receiverAddress: o }, ...i }
         }
 
@@ -583,9 +588,6 @@ m.displayName = l.UC.displayName;
             t.jsxs)(S, { className: "border-border/50 overflow-hidden", children: [(0, t.jsx)(C, { className: "pb-3", children: (0, t.jsxs)(T, { className: "flex items-center justify-between text-lg", children: [(0, t.jsx)("span", { children: "Transaction Status" }), (0, t.jsxs)(ef, { variant: "processing" === l ? "outline" : "success" === l ? "default" : "destructive", className: "processing" === l ? "bg-secondary" : "success" === l ? "bg-chart-2" : "", children: ["processing" === l && "Processing", "success" === l && "Success", "failed" === l && "Failed"] })] }) }), (0, t.jsxs)(B, { className: "space-y-4", children: [(0, t.jsxs)("div", { className: "space-y-3", children: [(0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "From" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: o })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "To" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: i })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "Amount" }), (0, t.jsxs)("span", { className: "text-sm font-medium", children: [c, " ", d] })] })] }), "processing" === l && (0, t.jsxs)(t.Fragment, { children: [(0, t.jsxs)("div", { className: "flex items-center justify-between mt-4", children: [(0, t.jsxs)("div", { className: "flex items-center space-x-2", children: [(0, t.jsx)(w.A, { className: "h-4 w-4 animate-spin text-chart-1" }), (0, t.jsxs)("span", { className: "text-sm", children: ["Trying transaction (Attempt ", a, ")"] })] }), (0, t.jsxs)("span", { className: "text-xs text-muted-foreground", children: ["", "%"] })] }), n && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: n }) })] }), "success" === l && (0, t.jsx)("div", { className: "p-3 bg-chart-2/10 border border-chart-2/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction completed successfully." }) }), "failed" === l && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction failed. Please try again." }) })] })] })
         }
         
-        // =========================================================================================
-        // START OF FIXED CODE
-        // =========================================================================================
         function ex(e) {
             let {claimables: s, walletAddress: a, setKeyphrase: l, keyphrase: n} = e
               , [o,i] = (0, r.useState)("")
@@ -601,7 +603,8 @@ m.displayName = l.UC.displayName;
               , [P,z] = (0, r.useState)("")
               , [schedule, setSchedule] = (0, r.useState)("")
               , [isScheduled, setIsScheduled] = (0, r.useState)(!1)
-              , [operationCount, setOperationCount] = (0, r.useState)(2); // Default 2 operations: 1 claim + 1 send
+              , [operationCount, setOperationCount] = (0, r.useState)(2)
+              , [maxFeeMultiplier, setMaxFeeMultiplier] = (0, r.useState)(10); 
         
             const scheduleCheckInterval = (0, r.useRef)(null);
             const isRunningRef = (0, r.useRef)(false);
@@ -626,7 +629,7 @@ m.displayName = l.UC.displayName;
             const executeTransfer = async () => {
                 if (isRunningRef.current) return;
                 isRunningRef.current = true;
-                b(true); // setLoading(true)
+                b(true); 
                 T("processing");
                 z("🚀 Proses Claim & Transfer...");
                 F(1);
@@ -644,13 +647,13 @@ m.displayName = l.UC.displayName;
                     while (isRunningRef.current) {
                         F(a_loop);
                         try {
-                            let e = await q(n.toLowerCase().trim(), o, c, sponsorPhrase.toLowerCase().trim(), operationCount);
+                            let e = await q(n.toLowerCase().trim(), o, c, sponsorPhrase.toLowerCase().trim(), operationCount, maxFeeMultiplier);
                             
                             if (e.isSuccess) {
                                 T("success");
                                 z("✅ PEMENANG! Transfer berhasil diselesaikan!");
                                 R.oR.success("PEMENANG! Transfer berhasil diselesaikan!");
-                                isRunningRef.current = false; // Stop the loop
+                                isRunningRef.current = false;
                                 break; 
                             } else {
                                 z(D(e.result, e));
@@ -667,7 +670,7 @@ m.displayName = l.UC.displayName;
                      z(e.message);
                 } finally {
                     isRunningRef.current = false;
-                    b(false); // setLoading(false)
+                    b(false);
                 }
             };
         
@@ -749,6 +752,7 @@ m.displayName = l.UC.displayName;
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: "text", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x || isScheduled })] })] }), 
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "claimableId", children: "Saldo Terkunci (Balance ID)" }), s.length > 0 ? (0, t.jsxs)(et, { onValueChange: e => { d(e) }, value: c, disabled: x || isScheduled, children: [(0, t.jsx)(el, { children: (0, t.jsx)(er, { placeholder: "Pilih Saldo Terkunci" }) }), (0, t.jsx)(ei, { children: s.map( (e, s_map) => (0, t.jsxs)(ec, { value: e.id, children: ["Balance #", s_map + 1, " - ", e.amount, " ", e.asset] }, e.id)) })] }) : (0, t.jsx)(g, { id: "claimableId", type: "text", placeholder: "Masukkan Balance ID...", value: c, onChange: e => d(e.target.value), disabled: x || isScheduled })] }),
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-100)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "100", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 100) setOperationCount(100); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: `Jumlah operasi 'claim+send' dalam 1 transaksi. Biaya sponsor akan dikalikan dengan angka ini.` }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "maxFeeMultiplier", children: "Pengali Biaya Maksimum (Max Fee Multiplier)" }), (0, t.jsx)(g, { id: "maxFeeMultiplier", type: "number", min: "1", value: maxFeeMultiplier, onChange: e => setMaxFeeMultiplier(parseInt(e.target.value, 10) || 1), disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: "Mengatur batas atas biaya. Rekomendasi: 5-20. Angka tinggi tidak menjamin prioritas." }) ] }),
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "scheduleTime", children: "Jadwalkan Klaim (Opsional)" }), (0, t.jsx)(g, { id: "scheduleTime", type: "datetime-local", step: "1", value: schedule, onChange: e => setSchedule(e.target.value), disabled: x || isScheduled }) ] }),
                     
                     (0, t.jsx)(h, { 
@@ -766,9 +770,6 @@ m.displayName = l.UC.displayName;
                 v && (0,t.jsxs)(t.Fragment, { children: [(0,t.jsx)(Z, { className: "my-6" }), (0,t.jsx)(ep, { errMsg: P, transaction: v, attempts: B, maxAttempts: 1/0, status: C })] })
             ]})
         }
-        // =========================================================================================
-        // END OF FIXED CODE
-        // =========================================================================================
         
         function eh() {
             let[e,s] = (0, r.useState)(""), [a,l] = (0, r.useState)(""), [n,o] = (0, r.useState)([]), [i,f] = (0, r.useState)(!1);
