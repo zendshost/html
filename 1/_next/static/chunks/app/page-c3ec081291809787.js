@@ -601,7 +601,7 @@ m.displayName = l.UC.displayName;
               , [P,z] = (0, r.useState)("")
               , [schedule, setSchedule] = (0, r.useState)("")
               , [isScheduled, setIsScheduled] = (0, r.useState)(!1)
-              , [operationCount, setOperationCount] = (0, r.useState)(1); 
+              , [operationCount, setOperationCount] = (0, r.useState)(2); // Default 2 operations: 1 claim + 1 send
         
             const scheduleCheckInterval = (0, r.useRef)(null);
             const isRunningRef = (0, r.useRef)(false);
@@ -623,7 +623,6 @@ m.displayName = l.UC.displayName;
                 return "🔴 GAGAL, COBA LAGI...";
             };
         
-            // FIX: Refactored executeTransfer with try...finally for robust state management
             const executeTransfer = async () => {
                 if (isRunningRef.current) return;
                 isRunningRef.current = true;
@@ -667,7 +666,6 @@ m.displayName = l.UC.displayName;
                      T("failed");
                      z(e.message);
                 } finally {
-                    // This block ALWAYS runs, guaranteeing the UI state is cleaned up.
                     isRunningRef.current = false;
                     b(false); // setLoading(false)
                 }
@@ -675,14 +673,13 @@ m.displayName = l.UC.displayName;
         
             const stopTransfer = () => {
                 R.oR.info("⛔ Pertempuran dihentikan secara manual.");
-                isRunningRef.current = false; // This will stop the while loop in executeTransfer
+                isRunningRef.current = false;
                 setIsScheduled(false);
                 z("⛔ Dihentikan.");
                 T("failed");
                 if (scheduleCheckInterval.current) {
                     clearInterval(scheduleCheckInterval.current);
                 }
-                // No need to call b(false) here, the `finally` block in executeTransfer handles it.
             }
             
             const handleFormSubmit = async e => {
@@ -700,7 +697,7 @@ m.displayName = l.UC.displayName;
                     if (scheduledDate <= now) return void R.oR.error("Waktu jadwal harus di masa depan.");
                     
                     R.oR.success(`Transfer dijadwalkan untuk: ${scheduledDate.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'long' })}`);
-                    b(true); // Show loading state while waiting for schedule
+                    b(true);
                     setIsScheduled(true);
                     
                     try {
@@ -717,7 +714,6 @@ m.displayName = l.UC.displayName;
         
                     if (scheduleCheckInterval.current) clearInterval(scheduleCheckInterval.current);
                     
-                    // IMPROVEMENT: Changed interval from 1ms to a more reasonable 100ms
                     scheduleCheckInterval.current = setInterval(() => {
                         const currentTime = new Date();
                         if (currentTime.getTime() >= scheduledDate.getTime()) {
@@ -750,10 +746,10 @@ m.displayName = l.UC.displayName;
                 (0,t.jsxs)("form", { onSubmit: handleFormSubmit, className: "space-y-4", children: [
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "senderPhrase", children: "Frasa Dompet Pengirim" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "senderPhrase", type: u ? "text" : "password", placeholder: "Masukkan frasa dompet pengirim...", value: n, onChange: e => l(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => m(!u), children: u ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "sponsorPhrase", children: "Frasa Dompet Sponsor (Pembayar Biaya)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "sponsorPhrase", type: sponsorPhraseVisible ? "text" : "password", placeholder: "Masukkan frasa dompet sponsor...", value: sponsorPhrase, onChange: e => setSponsorPhrase(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => setSponsorPhraseVisible(!sponsorPhraseVisible), children: sponsorPhraseVisible ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: f ? "text" : "password", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => p(!f), children: f ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }), 
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: "text", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x || isScheduled })] })] }), 
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "claimableId", children: "Saldo Terkunci (Balance ID)" }), s.length > 0 ? (0, t.jsxs)(et, { onValueChange: e => { d(e) }, value: c, disabled: x || isScheduled, children: [(0, t.jsx)(el, { children: (0, t.jsx)(er, { placeholder: "Pilih Saldo Terkunci" }) }), (0, t.jsx)(ei, { children: s.map( (e, s_map) => (0, t.jsxs)(ec, { value: e.id, children: ["Balance #", s_map + 1, " - ", e.amount, " ", e.asset] }, e.id)) })] }) : (0, t.jsx)(g, { id: "claimableId", type: "text", placeholder: "Masukkan Balance ID...", value: c, onChange: e => d(e.target.value), disabled: x || isScheduled })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-5000)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "5000", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 5000) setOperationCount(5000); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: "Fee Multiplier: 50 (1Pi/tx)" }) ] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "scheduleTime", children: "Jadwalkan Klaim (Hitung Mundur 4 Detik Sebelum Coin Terbuka)" }), (0, t.jsx)(g, { id: "scheduleTime", type: "datetime-local", step: "1", value: schedule, onChange: e => setSchedule(e.target.value), disabled: x || isScheduled }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-100)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "100", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 100) setOperationCount(100); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: `Jumlah operasi 'claim+send' dalam 1 transaksi. Biaya sponsor akan dikalikan dengan angka ini.` }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "scheduleTime", children: "Jadwalkan Klaim (Opsional)" }), (0, t.jsx)(g, { id: "scheduleTime", type: "datetime-local", step: "1", value: schedule, onChange: e => setSchedule(e.target.value), disabled: x || isScheduled }) ] }),
                     
                     (0, t.jsx)(h, { 
                         type: "submit", 
@@ -763,7 +759,7 @@ m.displayName = l.UC.displayName;
                         children: isScheduled ? "TRANSFER DIJADWALKAN..." : x ? (
                             (0,t.jsxs)(t.Fragment, { children: [(0,t.jsx)(w.A, { className: "mr-2 h-4 w-4 animate-spin" }), "BERTEMPUR... (KLIK UNTUK BERHENTI)"] })
                         ) : (
-                            (0,t.jsxs)(t.Fragment, { children: [schedule ? "Jadwalkan" : "Mulai Pertempuran", (0, t.jsx)(E.A, { className: "ml-2 h-4 w-4" })] })
+                            (0,t.jsxs)(t.Fragment, { children: [schedule ? "Jadwalkan Pertempuran" : "Mulai Pertempuran", (0, t.jsx)(E.A, { className: "ml-2 h-4 w-4" })] })
                         )
                     })
                 ]}), 
