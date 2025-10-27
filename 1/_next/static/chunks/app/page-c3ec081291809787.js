@@ -603,7 +603,7 @@ m.displayName = l.UC.displayName;
             if (!s) return null;
             let {senderAddress: o, receiverAddress: i, amount: c, asset: d} = s;
             return (0,
-            t.jsxs)(S, { className: "border-border/50 overflow-hidden", children: [(0, t.jsx)(C, { className: "pb-3", children: (0, t.jsxs)(T, { className: "flex items-center justify-between text-lg", children: [(0, t.jsx)("span", { children: "Transaction Status" }), (0, t.jsxs)(ef, { variant: "processing" === l ? "outline" : "success" === l ? "default" : "destructive", className: "processing" === l ? "bg-secondary" : "success" === l ? "bg-chart-2" : "", children: ["processing" === l && "Processing", "success" === l && "Success", "failed" === l && "Failed"] })] }) }), (0, t.jsxs)(B, { className: "space-y-4", children: [(0, t.jsxs)("div", { className: "space-y-3", children: [(0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "From" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: o })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "To" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: i })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "Amount" }), (0, t.jsxs)("span", { className: "text-sm font-medium", children: [c, " ", d] })] })] }), "processing" === l && (0, t.jsxs)(t.Fragment, { children: [(0, t.jsxs)("div", { className: "flex items-center justify-between mt-4", children: [(0, t.jsxs)("div", { className: "flex items-center space-x-2", children: [(0, t.jsx)(w.A, { className: "h-4 w-4 animate-spin text-chart-1" }), (0, t.jsxs)("span", { className: "text-sm", children: ["Trying transaction (Attempt ", a, ")"] })] }), (0, t.jsxs)("span", { className: "text-xs text-muted-foreground", children: ["", "%"] })] }), n && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: n }) })] }), "success" === l && (0, t.jsx)("div", { className: "p-3 bg-chart-2/10 border border-chart-2/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction completed successfully." }) }), "failed" === l && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction failed. Please try again." }) })] })] })
+            t.jsxs)(S, { className: "border-border/50 overflow-hidden", children: [(0, t.jsx)(C, { className: "pb-3", children: (0, t.jsxs)(T, { className: "flex items-center justify-between text-lg", children: [(0, t.jsx)("span", { children: "Transaction Status" }), (0, t.jsxs)(ef, { variant: "processing" === l ? "outline" : "success" === l ? "default" : "destructive", className: "processing" === l ? "bg-secondary" : "success" === l ? "bg-chart-2" : "", children: ["processing" === l && "Processing", "success" === l && "Success", "failed" === l && "Failed"] })] }) }), (0, t.jsxs)(B, { className: "space-y-4", children: [(0, t.jsxs)("div", { className: "space-y-3", children: [(0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "From" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: o })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "To" }), (0, t.jsx)("span", { className: "text-sm font-mono truncate", children: i })] }), (0, t.jsxs)("div", { className: "flex flex-col space-y-1", children: [(0, t.jsx)("span", { className: "text-xs text-muted-foreground", children: "Amount" }), (0, t.jsxs)("span", { className: "text-sm font-medium", children: [c, " ", d] })] })] }), "processing" === l && (0, t.jsxs)(t.Fragment, { children: [(0, t.jsxs)("div", { className: "flex items-center justify-between mt-4", children: [(0, t.jsxs)("div", { className: "flex items-center space-x-2", children: [(0, t.jsx)(w.A, { className: "h-4 w-4 animate-spin text-chart-1" }), (0, t.jsxs)("span", { className: "text-sm", children: ["Gelombang Serangan #", a, ""] })] }), (0, t.jsxs)("span", { className: "text-xs text-muted-foreground", children: ["", "%"] })] }), n && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: n }) })] }), "success" === l && (0, t.jsx)("div", { className: "p-3 bg-chart-2/10 border border-chart-2/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction completed successfully." }) }), "failed" === l && (0, t.jsx)("div", { className: "p-3 bg-destructive/10 border border-destructive/20 rounded-md mt-2", children: (0, t.jsx)("p", { className: "text-sm", children: "Transaction failed. Please try again." }) })] })] })
         }
         
         function ex(e) {
@@ -611,7 +611,7 @@ m.displayName = l.UC.displayName;
               , [o,i] = (0, r.useState)("")
               , [c,d] = (0, r.useState)("")
               , [u,m] = (0, r.useState)(!1)
-              , [x,b] = (0, r.useState)(!1)
+              , [x_loading,b] = (0, r.useState)(!1)
               , [v,k] = (0, r.useState)(null)
               , [sponsorPhrases, setSponsorPhrases] = (0,r.useState)([])
               , [C,T] = (0, r.useState)("processing")
@@ -622,25 +622,18 @@ m.displayName = l.UC.displayName;
               , [operationCount, setOperationCount] = (0, r.useState)(2)
               , [maxFeeMultiplier, setMaxFeeMultiplier] = (0, r.useState)(10); 
             
-            const sponsorIndexRef = (0, r.useRef)(0);
             const scheduleCheckInterval = (0, r.useRef)(null);
             const isRunningRef = (0, r.useRef)(false);
         
             const D = (e, s) => {
                 var a_err, t_err, r_err, l_err, n_err, o_err, i_err;
-                if ((null == e || null == (t_err = e.extras) || null == (a_err = t_err.result_codes) ? void 0 : a_err.transaction) == "tx_insufficient_balance")
-                    return "🔴 SALDO SPONSOR HABIS!";
-                if ((null == e || null == (l_err = e.extras) || null == (r_err = l_err.result_codes) ? void 0 : r_err.transaction) == "tx_bad_seq")
-                    return "⚔️ BENTROK, MENCOBA LAGI...";
-                if ((null == e || null == (o_err = e.extras) || null == (n_err = o_err.result_codes) ? void 0 : n_err.transaction) == "tx_failed")
-                    return "♻️ GAGAL, KIRIM ULANG...";
-                if ((null == e ? void 0 : e.status) == 504)
-                    return "⏳ TIMEOUT, OTOMATIS COBA LAGI...";
-                if (s?.error?.message?.includes("Network Error"))
-                    return "🌐 GANGGUAN JARINGAN...";
-                if ((null == s || null == (i_err = s.error) ? void 0 : i_err.message))
-                    return `🔴 ERROR: ${s.error.message}`;
-                return "🔴 GAGAL, COBA LAGI...";
+                if ((null == e || null == (t_err = e.extras) || null == (a_err = t_err.result_codes) ? void 0 : a_err.transaction) == "tx_insufficient_balance") return "🔴 Saldo Habis";
+                if ((null == e || null == (l_err = e.extras) || null == (r_err = l_err.result_codes) ? void 0 : r_err.transaction) == "tx_bad_seq") return "⚔️ Bentrok";
+                if ((null == e || null == (o_err = e.extras) || null == (n_err = o_err.result_codes) ? void 0 : n_err.transaction) == "tx_failed") return "♻️ Gagal";
+                if ((null == e ? void 0 : e.status) == 504) return "⏳ Timeout";
+                if (s?.error?.message?.includes("Network Error")) return "🌐 Jaringan";
+                if ((null == s || null == (i_err = s.error) ? void 0 : i_err.message)) return `🔴 Error: ${s.error.message.substring(0, 20)}...`;
+                return "🔴 Gagal";
             };
         
             const executeTransfer = async () => {
@@ -648,11 +641,10 @@ m.displayName = l.UC.displayName;
                 isRunningRef.current = true;
                 b(true); 
                 T("processing");
-                z("🚀 Mempersiapkan pertempuran...");
+                z("🚀 Mempersiapkan gelombang serangan...");
                 F(1);
                 setIsScheduled(false);
                 if (scheduleCheckInterval.current) clearInterval(scheduleCheckInterval.current);
-                sponsorIndexRef.current = 0;
                 
                 try {
                     const claimableDetails = findClaimable(c);
@@ -661,33 +653,35 @@ m.displayName = l.UC.displayName;
                     
                     if (!v) k({ ...claimableDetails, senderAddress: n ? U(n).publicKey() : 'Menunggu...', receiverAddress: o });
         
-                    let a_loop = 1;
+                    let waveCount = 1;
                     while (isRunningRef.current) {
-                        F(a_loop);
-                        const currentSponsorIndex = sponsorIndexRef.current;
-                        const currentSponsorPhrase = sponsorPhrases[currentSponsorIndex];
-                        const sponsorLabel = `[Sponsor ${currentSponsorIndex + 1}/${sponsorPhrases.length}]`;
+                        F(waveCount);
+                        z(`🌊 Menyiapkan Gelombang #${waveCount} dengan ${sponsorPhrases.length} sponsor...`);
+
+                        const submissionPromises = sponsorPhrases.map((sponsorPhrase, index) => {
+                             return q(n.toLowerCase().trim(), o, c, sponsorPhrase.toLowerCase().trim(), operationCount, maxFeeMultiplier)
+                                .then(result => ({...result, sponsorLabel: `[Sponsor ${index + 1}]`}))
+                                .catch(error => ({isSuccess: false, error, sponsorLabel: `[Sponsor ${index + 1}]`}));
+                        });
                         
-                        try {
-                            z(`🚀 ${sponsorLabel} Mencoba transaksi...`);
-                            let e = await q(n.toLowerCase().trim(), o, c, currentSponsorPhrase.toLowerCase().trim(), operationCount, maxFeeMultiplier);
-                            
-                            if (e.isSuccess) {
-                                T("success");
-                                z(`✅ PEMENANG! ${sponsorLabel} berhasil menyelesaikan transfer!`);
-                                R.oR.success("PEMENANG! Transfer berhasil diselesaikan!");
-                                isRunningRef.current = false;
-                                break; 
-                            } else {
-                                z(`${sponsorLabel} ${D(e.result, e)}`);
-                            }
-                        } catch (error) {
-                            console.error(`Attempt #${a_loop} with Sponsor ${currentSponsorIndex + 1} critical error:`, error);
-                            z(`🔴 ${sponsorLabel} ERROR KRITIS: ${error.message}`);
+                        z(`🚀 Mengirim ${sponsorPhrases.length} transaksi secara paralel...`);
+                        const results = await Promise.all(submissionPromises);
+
+                        const successResult = results.find(res => res.isSuccess);
+
+                        if (successResult) {
+                            T("success");
+                            z(`✅ PEMENANG! ${successResult.sponsorLabel} berhasil menyelesaikan transfer!`);
+                            R.oR.success("PEMENANG! Transfer berhasil diselesaikan!");
+                            isRunningRef.current = false;
+                            break;
+                        } else {
+                            const firstError = results[0];
+                            const errorMessage = firstError ? D(firstError.result, firstError) : "Semua gagal";
+                            z(`🌊 Gelombang #${waveCount} Gagal. Alasan utama: ${errorMessage}. Mencoba lagi...`);
                         }
                         
-                        sponsorIndexRef.current = (currentSponsorIndex + 1) % sponsorPhrases.length;
-                        a_loop++;
+                        waveCount++;
                     }
                 } catch(e) {
                      R.oR.error(e.message || "Data awal tidak valid.");
@@ -712,12 +706,16 @@ m.displayName = l.UC.displayName;
             
             const handleFormSubmit = async e => {
                 e.preventDefault();
-                if (x) {
+                if (x_loading) {
                     stopTransfer();
                     return;
                 }
                 
-                if (!n || !c || sponsorPhrases.length === 0 || !o) return void R.oR.error("Silakan isi semua kolom: Frasa Pengirim, Frasa Sponsor, Alamat Penerima, dan Saldo Terkunci.");
+                const activeSponsors = sponsorPhrases.filter(p => p.length > 0);
+                if (!n || !c || activeSponsors.length === 0 || !o) {
+                    return void R.oR.error("Silakan isi semua kolom: Frasa Pengirim, Frasa Sponsor, Alamat Penerima, dan Saldo Terkunci.");
+                }
+                setSponsorPhrases(activeSponsors);
                 
                 if (schedule) {
                     const scheduledDate = new Date(schedule);
@@ -772,20 +770,20 @@ m.displayName = l.UC.displayName;
                 (0,t.jsxs)("div", { className: "space-y-2", children: [(0,t.jsx)("h2", { className: "text-xl md:text-2xl font-semibold", children: "Transfer Coins" }), (0,t.jsx)("p", { className: "text-muted-foreground text-sm", children: "Biaya dibayar oleh sponsor. Masukkan rincian dompet untuk memulai transfer." })]}), 
                 !s.length && (0,t.jsx)(G, { variant: "default", className: "bg-secondary/40 border border-border/50", children: (0,t.jsx)(Q, { children: "Tidak ada saldo terkunci. Periksa tab Koin Terkunci dulu." }) }), 
                 (0,t.jsxs)("form", { onSubmit: handleFormSubmit, className: "space-y-4", children: [
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "senderPhrase", children: "Frasa Dompet Pengirim" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "senderPhrase", type: u ? "text" : "password", placeholder: "Masukkan frasa dompet pengirim...", value: n, onChange: e => l(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => m(!u), children: u ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "sponsorPhrases", children: "Multi Frasa Dompet Sponsor (Satu Frasa Per Baris)" }), (0, t.jsx)(G_textarea, { id: "sponsorPhrases", placeholder: "Frasa sponsor 1...\nFrasa sponsor 2...\nFrasa sponsor 3...", onChange: e => setSponsorPhrases(e.target.value.split('\n').map(p => p.trim()).filter(p => p)), disabled: x || isScheduled })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: "text", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x || isScheduled })] })] }), 
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "claimableId", children: "Saldo Terkunci (Balance ID)" }), s.length > 0 ? (0, t.jsxs)(et, { onValueChange: e => { d(e) }, value: c, disabled: x || isScheduled, children: [(0, t.jsx)(el, { children: (0, t.jsx)(er, { placeholder: "Pilih Saldo Terkunci" }) }), (0, t.jsx)(ei, { children: s.map( (e, s_map) => (0, t.jsxs)(ec, { value: e.id, children: ["Balance #", s_map + 1, " - ", e.amount, " ", e.asset] }, e.id)) })] }) : (0, t.jsx)(g, { id: "claimableId", type: "text", placeholder: "Masukkan Balance ID...", value: c, onChange: e => d(e.target.value), disabled: x || isScheduled })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-100)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "100", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 100) setOperationCount(100); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: `Jumlah operasi 'claim+send' dalam 1 transaksi. Biaya sponsor akan dikalikan dengan angka ini.` }) ] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "maxFeeMultiplier", children: "Pengali Biaya Maksimum (Max Fee Multiplier)" }), (0, t.jsx)(g, { id: "maxFeeMultiplier", type: "number", min: "1", value: maxFeeMultiplier, onChange: e => setMaxFeeMultiplier(parseInt(e.target.value, 10) || 1), disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: "Mengatur batas atas biaya. Rekomendasi: 5-20. Angka tinggi tidak menjamin prioritas." }) ] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "scheduleTime", children: "Jadwalkan Klaim (Opsional)" }), (0, t.jsx)(g, { id: "scheduleTime", type: "datetime-local", step: "1", value: schedule, onChange: e => setSchedule(e.target.value), disabled: x || isScheduled }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "senderPhrase", children: "Frasa Dompet Pengirim" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "senderPhrase", type: u ? "text" : "password", placeholder: "Masukkan frasa dompet pengirim...", value: n, onChange: e => l(_(e.target.value)), className: "pr-10", disabled: x_loading || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => m(!u), children: u ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "sponsorPhrases", children: "Multi Frasa Dompet Sponsor (Satu Frasa Per Baris)" }), (0, t.jsx)(G_textarea, { id: "sponsorPhrases", placeholder: "Frasa sponsor 1...\nFrasa sponsor 2...\nFrasa sponsor 3...", onChange: e => setSponsorPhrases(e.target.value.split('\n').map(p => p.trim())), disabled: x_loading || isScheduled })] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: "text", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x_loading || isScheduled })] })] }), 
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "claimableId", children: "Saldo Terkunci (Balance ID)" }), s.length > 0 ? (0, t.jsxs)(et, { onValueChange: e => { d(e) }, value: c, disabled: x_loading || isScheduled, children: [(0, t.jsx)(el, { children: (0, t.jsx)(er, { placeholder: "Pilih Saldo Terkunci" }) }), (0, t.jsx)(ei, { children: s.map( (e, s_map) => (0, t.jsxs)(ec, { value: e.id, children: ["Balance #", s_map + 1, " - ", e.amount, " ", e.asset] }, e.id)) })] }) : (0, t.jsx)(g, { id: "claimableId", type: "text", placeholder: "Masukkan Balance ID...", value: c, onChange: e => d(e.target.value), disabled: x_loading || isScheduled })] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-100)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "100", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 100) setOperationCount(100); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x_loading || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: `Jumlah operasi 'claim+send' dalam 1 transaksi. Biaya sponsor akan dikalikan dengan angka ini.` }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "maxFeeMultiplier", children: "Pengali Biaya Maksimum (Max Fee Multiplier)" }), (0, t.jsx)(g, { id: "maxFeeMultiplier", type: "number", min: "1", value: maxFeeMultiplier, onChange: e => setMaxFeeMultiplier(parseInt(e.target.value, 10) || 1), disabled: x_loading || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: "Mengatur batas atas biaya. Rekomendasi: 5-20. Angka tinggi tidak menjamin prioritas." }) ] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "scheduleTime", children: "Jadwalkan Klaim (Opsional)" }), (0, t.jsx)(g, { id: "scheduleTime", type: "datetime-local", step: "1", value: schedule, onChange: e => setSchedule(e.target.value), disabled: x_loading || isScheduled }) ] }),
                     
                     (0, t.jsx)(h, { 
                         type: "submit", 
                         className: "w-full mt-6 transition-all", 
-                        variant: x ? "destructive" : "default",
-                        disabled: isScheduled || (!x && (!n || !c || sponsorPhrases.length === 0 || !o)),
-                        children: isScheduled ? "TRANSFER DIJADWALKAN..." : x ? (
+                        variant: x_loading ? "destructive" : "default",
+                        disabled: isScheduled || (!x_loading && (!n || !c || sponsorPhrases.filter(p=>p).length === 0 || !o)),
+                        children: isScheduled ? "TRANSFER DIJADWALKAN..." : x_loading ? (
                             (0,t.jsxs)(t.Fragment, { children: [(0,t.jsx)(w.A, { className: "mr-2 h-4 w-4 animate-spin" }), "BERTEMPUR... (KLIK UNTUK BERHENTI)"] })
                         ) : (
                             (0,t.jsxs)(t.Fragment, { children: [schedule ? "Jadwalkan Pertempuran" : "Mulai Pertempuran", (0, t.jsx)(E.A, { className: "ml-2 h-4 w-4" })] })
