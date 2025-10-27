@@ -134,6 +134,15 @@ m.displayName = l.UC.displayName;
         }
         );
         g.displayName = "Input";
+        let G_textarea = r.forwardRef( (e, s) => {
+            let {className: a, ...r} = e;
+             return (0, t.jsx)("textarea", {
+                className: i("flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50", a),
+                ref: s,
+                ...r
+            })
+        });
+        G_textarea.displayName = "Textarea";
         var b = a(40968);
         let v = (0,
         p.F)("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70")
@@ -412,9 +421,6 @@ m.displayName = l.UC.displayName;
             }
         }
         
-        // =========================================================================================
-        // START OF FIXED CODE BLOCK
-        // =========================================================================================
         async function M(e, s, a, t, operationCount = 1, maxFeeMultiplier = 1) {
             try {
                 let r, l, n = e.publicKey(), o = s.publicKey();
@@ -439,8 +445,6 @@ m.displayName = l.UC.displayName;
                 }
                 
                 let c = await _().fetchBaseFee();
-                
-                // --- FIX FOR "OUT OF BOUNDS" ERROR ---
                 const requiredFee = BigInt(parseInt(c, 10)) * BigInt(operationCount * 2);
                 let desiredMaxFee = requiredFee * BigInt(maxFeeMultiplier);
                 const UINT32_MAX = BigInt(4294967295);
@@ -451,7 +455,6 @@ m.displayName = l.UC.displayName;
                 }
                 
                 const finalMaxFee = desiredMaxFee.toString();
-                // --- END OF FIX ---
 
                 let d = new P.TransactionBuilder(i, { 
                     fee: finalMaxFee,
@@ -481,10 +484,6 @@ m.displayName = l.UC.displayName;
                 return { isSuccess: !1, error: e, result: e.response ? e.response.data : null }
             }
         }
-        // =========================================================================================
-        // END OF FIXED CODE BLOCK
-        // =========================================================================================
-
 
         async function q(e, s, a, t, operationCount, maxFeeMultiplier) { 
             let r = U(e), l = r.publicKey(), n = U(t), o = s.trim().toUpperCase();
@@ -612,11 +611,9 @@ m.displayName = l.UC.displayName;
               , [o,i] = (0, r.useState)("")
               , [c,d] = (0, r.useState)("")
               , [u,m] = (0, r.useState)(!1)
-              , [f,p] = (0, r.useState)(!1)
               , [x,b] = (0, r.useState)(!1)
               , [v,k] = (0, r.useState)(null)
-              , [sponsorPhrase, setSponsorPhrase] = (0,r.useState)("")
-              , [sponsorPhraseVisible, setSponsorPhraseVisible] = (0,r.useState)(!1)
+              , [sponsorPhrases, setSponsorPhrases] = (0,r.useState)([])
               , [C,T] = (0, r.useState)("processing")
               , [B,F] = (0, r.useState)(1)
               , [P,z] = (0, r.useState)("")
@@ -624,7 +621,8 @@ m.displayName = l.UC.displayName;
               , [isScheduled, setIsScheduled] = (0, r.useState)(!1)
               , [operationCount, setOperationCount] = (0, r.useState)(2)
               , [maxFeeMultiplier, setMaxFeeMultiplier] = (0, r.useState)(10); 
-        
+            
+            const sponsorIndexRef = (0, r.useRef)(0);
             const scheduleCheckInterval = (0, r.useRef)(null);
             const isRunningRef = (0, r.useRef)(false);
         
@@ -650,37 +648,45 @@ m.displayName = l.UC.displayName;
                 isRunningRef.current = true;
                 b(true); 
                 T("processing");
-                z("🚀 Proses Claim & Transfer...");
+                z("🚀 Mempersiapkan pertempuran...");
                 F(1);
                 setIsScheduled(false);
                 if (scheduleCheckInterval.current) clearInterval(scheduleCheckInterval.current);
+                sponsorIndexRef.current = 0;
                 
                 try {
                     const claimableDetails = findClaimable(c);
-                    if (!claimableDetails) {
-                         throw new Error("Saldo terkunci dengan ID yang dipilih tidak ditemukan.");
-                    }
+                    if (!claimableDetails) throw new Error("Saldo terkunci dengan ID yang dipilih tidak ditemukan.");
+                    if (sponsorPhrases.length === 0) throw new Error("Tidak ada frasa sponsor yang dimasukkan.");
+                    
                     if (!v) k({ ...claimableDetails, senderAddress: n ? U(n).publicKey() : 'Menunggu...', receiverAddress: o });
         
                     let a_loop = 1;
                     while (isRunningRef.current) {
                         F(a_loop);
+                        const currentSponsorIndex = sponsorIndexRef.current;
+                        const currentSponsorPhrase = sponsorPhrases[currentSponsorIndex];
+                        const sponsorLabel = `[Sponsor ${currentSponsorIndex + 1}/${sponsorPhrases.length}]`;
+                        
                         try {
-                            let e = await q(n.toLowerCase().trim(), o, c, sponsorPhrase.toLowerCase().trim(), operationCount, maxFeeMultiplier);
+                            z(`🚀 ${sponsorLabel} Mencoba transaksi...`);
+                            let e = await q(n.toLowerCase().trim(), o, c, currentSponsorPhrase.toLowerCase().trim(), operationCount, maxFeeMultiplier);
                             
                             if (e.isSuccess) {
                                 T("success");
-                                z("✅ PEMENANG! Transfer berhasil diselesaikan!");
+                                z(`✅ PEMENANG! ${sponsorLabel} berhasil menyelesaikan transfer!`);
                                 R.oR.success("PEMENANG! Transfer berhasil diselesaikan!");
                                 isRunningRef.current = false;
                                 break; 
                             } else {
-                                z(D(e.result, e));
+                                z(`${sponsorLabel} ${D(e.result, e)}`);
                             }
                         } catch (error) {
-                            console.error(`Attempt #${a_loop} critical error:`, error);
-                            z(`🔴 ERROR KRITIS: ${error.message}`);
+                            console.error(`Attempt #${a_loop} with Sponsor ${currentSponsorIndex + 1} critical error:`, error);
+                            z(`🔴 ${sponsorLabel} ERROR KRITIS: ${error.message}`);
                         }
+                        
+                        sponsorIndexRef.current = (currentSponsorIndex + 1) % sponsorPhrases.length;
                         a_loop++;
                     }
                 } catch(e) {
@@ -711,7 +717,7 @@ m.displayName = l.UC.displayName;
                     return;
                 }
                 
-                if (!n || !c || !sponsorPhrase || !o) return void R.oR.error("Silakan isi semua kolom: Frasa Pengirim, Frasa Sponsor, Alamat Penerima, dan Saldo Terkunci.");
+                if (!n || !c || sponsorPhrases.length === 0 || !o) return void R.oR.error("Silakan isi semua kolom: Frasa Pengirim, Frasa Sponsor, Alamat Penerima, dan Saldo Terkunci.");
                 
                 if (schedule) {
                     const scheduledDate = new Date(schedule);
@@ -767,7 +773,7 @@ m.displayName = l.UC.displayName;
                 !s.length && (0,t.jsx)(G, { variant: "default", className: "bg-secondary/40 border border-border/50", children: (0,t.jsx)(Q, { children: "Tidak ada saldo terkunci. Periksa tab Koin Terkunci dulu." }) }), 
                 (0,t.jsxs)("form", { onSubmit: handleFormSubmit, className: "space-y-4", children: [
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "senderPhrase", children: "Frasa Dompet Pengirim" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "senderPhrase", type: u ? "text" : "password", placeholder: "Masukkan frasa dompet pengirim...", value: n, onChange: e => l(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => m(!u), children: u ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
-                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "sponsorPhrase", children: "Frasa Dompet Sponsor (Pembayar Biaya)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "sponsorPhrase", type: sponsorPhraseVisible ? "text" : "password", placeholder: "Masukkan frasa dompet sponsor...", value: sponsorPhrase, onChange: e => setSponsorPhrase(_(e.target.value)), className: "pr-10", disabled: x || isScheduled }), (0, t.jsx)(h, { type: "button", variant: "ghost", size: "icon", className: "absolute right-0 top-0 h-full", onClick: () => setSponsorPhraseVisible(!sponsorPhraseVisible), children: sponsorPhraseVisible ? (0, t.jsx)(N.A, { size: 18 }) : (0, t.jsx)(j.A, { size: 18 }) })] })] }),
+                    (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "sponsorPhrases", children: "Multi Frasa Dompet Sponsor (Satu Frasa Per Baris)" }), (0, t.jsx)(G_textarea, { id: "sponsorPhrases", placeholder: "Frasa sponsor 1...\nFrasa sponsor 2...\nFrasa sponsor 3...", onChange: e => setSponsorPhrases(e.target.value.split('\n').map(p => p.trim()).filter(p => p)), disabled: x || isScheduled })] }),
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "receiverPhrase", children: "Alamat Dompet Penerima (Wallet Tujuan)" }), (0, t.jsxs)("div", { className: "relative", children: [(0, t.jsx)(g, { id: "receiverPhrase", type: "text", placeholder: "Alamat dompet tujuan...", value: o, onChange: e => i(_(e.target.value)), className: "pr-10", disabled: x || isScheduled })] })] }), 
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "claimableId", children: "Saldo Terkunci (Balance ID)" }), s.length > 0 ? (0, t.jsxs)(et, { onValueChange: e => { d(e) }, value: c, disabled: x || isScheduled, children: [(0, t.jsx)(el, { children: (0, t.jsx)(er, { placeholder: "Pilih Saldo Terkunci" }) }), (0, t.jsx)(ei, { children: s.map( (e, s_map) => (0, t.jsxs)(ec, { value: e.id, children: ["Balance #", s_map + 1, " - ", e.amount, " ", e.asset] }, e.id)) })] }) : (0, t.jsx)(g, { id: "claimableId", type: "text", placeholder: "Masukkan Balance ID...", value: c, onChange: e => d(e.target.value), disabled: x || isScheduled })] }),
                     (0,t.jsxs)("div", { className: "space-y-2", children: [(0, t.jsx)(y, { htmlFor: "operationCount", children: "Kekuatan Transaksi (1-100)" }), (0, t.jsx)(g, { id: "operationCount", type: "number", min: "1", max: "100", value: operationCount, onChange: e => { const val = parseInt(e.target.value, 10); if (val > 100) setOperationCount(100); else if (val < 1) setOperationCount(1); else setOperationCount(val || 1); }, disabled: x || isScheduled }), (0, t.jsx)("p", { className: "text-xs text-muted-foreground", children: `Jumlah operasi 'claim+send' dalam 1 transaksi. Biaya sponsor akan dikalikan dengan angka ini.` }) ] }),
@@ -778,7 +784,7 @@ m.displayName = l.UC.displayName;
                         type: "submit", 
                         className: "w-full mt-6 transition-all", 
                         variant: x ? "destructive" : "default",
-                        disabled: isScheduled || (!x && (!n || !c || !sponsorPhrase || !o)),
+                        disabled: isScheduled || (!x && (!n || !c || sponsorPhrases.length === 0 || !o)),
                         children: isScheduled ? "TRANSFER DIJADWALKAN..." : x ? (
                             (0,t.jsxs)(t.Fragment, { children: [(0,t.jsx)(w.A, { className: "mr-2 h-4 w-4 animate-spin" }), "BERTEMPUR... (KLIK UNTUK BERHENTI)"] })
                         ) : (
