@@ -412,6 +412,9 @@ m.displayName = l.UC.displayName;
             }
         }
         
+        // =========================================================================================
+        // START OF FIXED CODE BLOCK
+        // =========================================================================================
         async function M(e, s, a, t, operationCount = 1, maxFeeMultiplier = 1) {
             try {
                 let r, l, n = e.publicKey(), o = s.publicKey();
@@ -436,10 +439,22 @@ m.displayName = l.UC.displayName;
                 }
                 
                 let c = await _().fetchBaseFee();
-                const calculatedMaxFee = (parseInt(c) * (operationCount * 2) * maxFeeMultiplier).toString();
+                
+                // --- FIX FOR "OUT OF BOUNDS" ERROR ---
+                const requiredFee = BigInt(parseInt(c, 10)) * BigInt(operationCount * 2);
+                let desiredMaxFee = requiredFee * BigInt(maxFeeMultiplier);
+                const UINT32_MAX = BigInt(4294967295);
+
+                if (desiredMaxFee > UINT32_MAX) {
+                    console.warn(`Calculated max fee (${desiredMaxFee}) exceeds Uint32 limit. Capping at ${UINT32_MAX}.`);
+                    desiredMaxFee = UINT32_MAX;
+                }
+                
+                const finalMaxFee = desiredMaxFee.toString();
+                // --- END OF FIX ---
 
                 let d = new P.TransactionBuilder(i, { 
-                    fee: calculatedMaxFee,
+                    fee: finalMaxFee,
                     networkPassphrase: O 
                 });
 
@@ -466,6 +481,10 @@ m.displayName = l.UC.displayName;
                 return { isSuccess: !1, error: e, result: e.response ? e.response.data : null }
             }
         }
+        // =========================================================================================
+        // END OF FIXED CODE BLOCK
+        // =========================================================================================
+
 
         async function q(e, s, a, t, operationCount, maxFeeMultiplier) { 
             let r = U(e), l = r.publicKey(), n = U(t), o = s.trim().toUpperCase();
