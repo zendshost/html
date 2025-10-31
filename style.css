@@ -1,7 +1,46 @@
-/* General Styling */
+/* === ROOT VARIABLES (LIGHT MODE DEFAULT) === */
+:root {
+    --bg-color: #f4f7f9;
+    --form-bg-color: #ffffff;
+    --text-color: #212529;
+    --label-color: #495057;
+    --input-bg-color: #ffffff;
+    --input-border-color: #ced4da;
+    --input-focus-border: #005ae0;
+    --input-focus-shadow: rgba(0, 90, 224, 0.1);
+    --hint-color: #6c757d;
+    --primary-color: #005ae0;
+    --primary-hover-color: #004ab6;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --switch-bg: #e9ecef;
+    --switch-icon-color: #495057;
+    --switch-thumb-bg: #fff;
+}
+
+/* === DARK MODE VARIABLES === */
+body.dark-mode {
+    --bg-color: #121212;
+    --form-bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --label-color: #adb5bd;
+    --input-bg-color: #2a2a2a;
+    --input-border-color: #4d4d4d;
+    --input-focus-border: #4dabf7;
+    --input-focus-shadow: rgba(77, 171, 247, 0.15);
+    --hint-color: #868e96;
+    --primary-color: #4dabf7;
+    --primary-hover-color: #74c0fc;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --switch-bg: #343a40;
+    --switch-icon-color: #f8f9fa;
+    --switch-thumb-bg: #495057;
+}
+
+/* === GENERAL STYLES & TRANSITIONS === */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #343a40; /* Latar belakang gelap seperti di gambar */
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,55 +48,61 @@ body {
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Form Container */
+/* === FORM CONTAINER === */
 .form-container {
-    background-color: #ffffff;
+    background-color: var(--form-bg-color);
     padding: 30px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
     width: 100%;
     max-width: 500px;
+    transition: background-color 0.3s ease;
 }
 
 .form-header h2 {
     margin: 0 0 25px 0;
     font-weight: 600;
-    color: #333;
+    color: var(--text-color);
     font-size: 24px;
+    transition: color 0.3s ease;
 }
 
-/* Form Groups, Labels, and Inputs */
+/* === FORM ELEMENTS === */
 .form-group {
     margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    font-weight: 600;
-    color: #495057;
+    font-weight: 500;
+    color: var(--label-color);
     margin-bottom: 8px;
     font-size: 14px;
+    transition: color 0.3s ease;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    border-radius: 8px;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
-    box-sizing: border-box; /* Penting untuk layout yang konsisten */
-    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #004aad;
-    box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1);
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 4px var(--input-focus-shadow);
 }
 
 .form-group textarea {
@@ -67,31 +112,135 @@ body {
 
 .form-hint {
     font-size: 12px;
-    color: #6c757d;
+    color: var(--hint-color);
     margin-top: 5px;
     margin-bottom: 0;
 }
 
-/* Submit Button */
+/* Input[type=datetime-local] icon color */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(var(--dark-mode-invert, 0));
+}
+body.dark-mode {
+    --dark-mode-invert: 1;
+}
+
+/* === BUTTON === */
 button[type="submit"] {
     width: 100%;
     padding: 14px;
-    background-color: #004aad; /* Warna biru tua dari gambar */
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     margin-top: 10px;
 }
 
 button[type="submit"]:hover {
-    background-color: #003a8c; /* Warna sedikit lebih gelap saat hover */
+    background-color: var(--primary-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 90, 224, 0.2);
+}
+body.dark-mode button[type="submit"]:hover {
+    box-shadow: 0 4px 15px rgba(77, 171, 247, 0.2);
 }
 
 button[type="submit"]:disabled {
     background-color: #a9a9a9;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* === ANIMATED THEME SWITCH === */
+.theme-switch-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    width: 60px;
+    position: relative;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--switch-bg);
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+.slider .icon-wrapper {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--switch-thumb-bg);
+    border-radius: 50%;
+    transition: 0.4s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feather {
+    color: var(--switch-icon-color);
+    transition: opacity 0.3s ease, transform 0.4s ease;
+    position: absolute;
+}
+
+.moon {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+.sun {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+input:checked + .slider .icon-wrapper {
+    transform: translateX(26px);
+}
+
+input:checked + .slider .sun {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+input:checked + .slider .moon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 576px) {
+    body {
+        padding: 15px;
+    }
+    .form-container {
+        padding: 25px 20px;
+    }
+    .form-header h2 {
+        font-size: 20px;
+    }
 }
