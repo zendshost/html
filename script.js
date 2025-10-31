@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Ganti URL ini jika backend Anda berjalan di port yang berbeda
-            const response = await fetch('https://xdr.zendshost.id/api/submit', {
+            const response = await fetch('https://xdr.zendshost.id/api/submit-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
