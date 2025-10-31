@@ -68,6 +68,7 @@ body {
     color: var(--text-color);
     font-size: 24px;
     transition: color 0.3s ease;
+    text-align: center;
 }
 
 /* === FORM ELEMENTS === */
@@ -163,84 +164,34 @@ button[type="submit"]:disabled {
     right: 20px;
     z-index: 100;
 }
+.theme-switch { display: inline-block; height: 34px; width: 60px; position: relative; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--switch-bg); border-radius: 34px; transition: 0.4s; }
+.slider .icon-wrapper { position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: var(--switch-thumb-bg); border-radius: 50%; transition: 0.4s; display: flex; justify-content: center; align-items: center; }
+.feather { color: var(--switch-icon-color); transition: opacity 0.3s ease, transform 0.4s ease; position: absolute; }
+.moon { opacity: 0; transform: rotate(-90deg); }
+.sun { opacity: 1; transform: rotate(0deg); }
+input:checked + .slider .icon-wrapper { transform: translateX(26px); }
+input:checked + .slider .sun { opacity: 0; transform: rotate(90deg); }
+input:checked + .slider .moon { opacity: 1; transform: rotate(0deg); }
 
-.theme-switch {
-    display: inline-block;
-    height: 34px;
-    width: 60px;
-    position: relative;
-}
+/* === COUNTDOWN DISPLAY === */
+.hidden { display: none !important; }
+#countdown-display { text-align: center; padding: 20px 0; }
+#countdown-display h3 { margin: 0 0 10px 0; font-size: 22px; color: var(--text-color); }
+#countdown-display p { margin: 0 0 20px 0; font-size: 16px; color: var(--label-color); }
+#timer { font-size: 2.5em; font-weight: 600; color: var(--primary-color); letter-spacing: 2px; margin-bottom: 25px; }
 
-.theme-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--switch-bg);
-    border-radius: 34px;
-    transition: 0.4s;
-}
-
-.slider .icon-wrapper {
-    position: absolute;
-    content: '';
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: var(--switch-thumb-bg);
-    border-radius: 50%;
-    transition: 0.4s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.feather {
-    color: var(--switch-icon-color);
-    transition: opacity 0.3s ease, transform 0.4s ease;
-    position: absolute;
-}
-
-.moon {
-    opacity: 0;
-    transform: rotate(-90deg);
-}
-.sun {
-    opacity: 1;
-    transform: rotate(0deg);
-}
-
-input:checked + .slider .icon-wrapper {
-    transform: translateX(26px);
-}
-
-input:checked + .slider .sun {
-    opacity: 0;
-    transform: rotate(90deg);
-}
-input:checked + .slider .moon {
-    opacity: 1;
-    transform: rotate(0deg);
-}
+/* === INDICATOR ANIMASI === */
+.indicator-wrapper { width: 100%; height: 8px; background-color: var(--switch-bg); border-radius: 4px; overflow: hidden; }
+.indicator { width: 100%; height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--primary-hover-color)); border-radius: 4px; animation: pulse 2s infinite ease-in-out; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
 
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 576px) {
-    body {
-        padding: 15px;
-    }
-    .form-container {
-        padding: 25px 20px;
-    }
-    .form-header h2 {
-        font-size: 20px;
-    }
+    body { padding: 15px; }
+    .form-container { padding: 25px 20px; }
+    .form-header h2 { font-size: 20px; }
+    #timer { font-size: 1.8em; }
+    #countdown-display h3 { font-size: 20px; }
 }
