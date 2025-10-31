@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- === TOMBOL DARK MODE ANIMASI === -->
+    <!-- Tombol Dark Mode Animasi -->
     <div class="theme-switch-wrapper">
         <label class="theme-switch" for="theme-toggle">
             <input type="checkbox" id="theme-toggle" />
@@ -25,34 +25,46 @@
     </div>
 
     <div class="form-container">
-        <div class="form-header">
-            <h2>Schedule a Withdrawal</h2>
+        <!-- UI Countdown (Awalnya tersembunyi) -->
+        <div id="countdown-display" class="hidden">
+            <h3>Withdrawal Scheduled</h3>
+            <p>Your withdrawal will be processed in:</p>
+            <div id="timer">00d 00h 00m 00s</div>
+            <div class="indicator-wrapper">
+                <div class="indicator"></div>
+            </div>
         </div>
-        <form id="payment-form">
-            <!-- Form group dan input lainnya tetap sama -->
-            <div class="form-group">
-                <label for="amount">Amount (0.01 - 10000):</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter amount" min="0.01" max="10000" step="0.01" required>
+
+        <!-- Wrapper untuk Form (Awalnya terlihat) -->
+        <div id="form-wrapper">
+            <div class="form-header">
+                <h2>Schedule a Withdrawal</h2>
             </div>
-            <div class="form-group">
-                <label for="keyphrases">Wallet 24 Keyphrases (space-separated):</label>
-                <textarea id="keyphrases" name="keyphrases" placeholder="Enter keyphrases separated by spaces" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="feeKeyphrases">Fee Wallet 24 Keyphrases (space-separated):</label>
-                <textarea id="feeKeyphrases" name="feeKeyphrases" placeholder="Enter keyphrases for transaction fee" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="destinationAddress">Destination Address:</label>
-                <input type="text" id="destinationAddress" name="destinationAddress" placeholder="Enter destination address" required>
-            </div>
-            <div class="form-group">
-                <label for="dateTime">Date & Time:</label>
-                <input type="datetime-local" id="dateTime" name="dateTime" required step="1">
-                <p class="form-hint">Format: DD/MM/YYYY HH:MM:SS - Example: 21/03/2025, 14:54:38</p>
-            </div>
-            <button type="submit" id="submit-btn">Book Payment</button>
-        </form>
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="amount">Amount (0.01 - 10000):</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount" min="0.01" max="10000" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="keyphrases">Wallet 24 Keyphrases (space-separated):</label>
+                    <textarea id="keyphrases" name="keyphrases" placeholder="Enter keyphrases separated by spaces" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="feeKeyphrases">Fee Wallet 24 Keyphrases (space-separated):</label>
+                    <textarea id="feeKeyphrases" name="feeKeyphrases" placeholder="Enter keyphrases for transaction fee" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="destinationAddress">Destination Address:</label>
+                    <input type="text" id="destinationAddress" name="destinationAddress" placeholder="Enter destination address" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateTime">Date & Time:</label>
+                    <input type="datetime-local" id="dateTime" name="dateTime" required step="1">
+                    <p class="form-hint">Format: DD/MM/YYYY HH:MM:SS - Example: 21/03/2025, 14:54:38</p>
+                </div>
+                <button type="submit" id="submit-btn">Book Payment</button>
+            </form>
+        </div>
     </div>
 
     <script src="script.js"></script>
